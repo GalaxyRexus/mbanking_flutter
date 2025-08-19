@@ -5,11 +5,21 @@ class MyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder(
-      fallbackHeight: 200,
-      fallbackWidth: 200,
-      color: Colors.blue,
-      strokeWidth: 2.0,
+    return Scaffold(
+      body: Center(
+        child: Text('Halaman Utama')),
+        bottomNavigationBar: BottomNavigationBar(
+          items : const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Persons',
+            ),
+          ]
+        ),
     );
   }
 }
