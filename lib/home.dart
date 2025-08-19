@@ -5,6 +5,11 @@ class MyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Placeholder(
+      fallbackHeight: 200,
+      fallbackWidth: 200,
+      color: Colors.blue,
+      strokeWidth: 2.0,
+    );
   }
 }
