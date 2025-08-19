@@ -18,7 +18,7 @@ class MyWidget extends StatelessWidget {
               icon: Icon(Icons.person),
               label: 'Persons',
             ),
-          ]
+          ],
         ),
     );
   }
