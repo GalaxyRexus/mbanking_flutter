@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'form_transfer.dart';
 
 void main() {
-  runApp(const Home());
+  runApp(const MyApp());
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +14,6 @@ class Home extends StatelessWidget {
       title: "DECApay",
       theme: ThemeData(primarySwatch: Colors.purple),
       home: HomePage(),
-      routes: {
-        '/form_transfer': (context) => FormTransferPage(),
-      },
     );
   }
 }
@@ -99,16 +95,6 @@ class HomePage extends StatelessWidget {
                           label: "Riwayat",
                           onTap: () => _goToPage(context, "Riwayat"),
                         ),
-                        const _MenuIcon(icon: Icons.add_circle, label: "Top Up"),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8),
-                          onTap: () {
-                            Navigator.pushNamed(context, '/form_transfer');
-                          },
-                          child: const _MenuIcon(icon: Icons.send, label: "Transfer"),
-                        ),
-                        const _MenuIcon(icon: Icons.money_off, label: "Tarik Tunai"),
-                        const _MenuIcon(icon: Icons.history, label: "Riwayat"),
                       ],
                     ),
                   ],
@@ -179,9 +165,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// ===================== WIDGET =====================
-
-// Widget untuk ikon di dalam Card Saldo (tanpa ripple)
+// Widget untuk ikon di dalam Card Saldo 
 class _MenuIcon extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -234,7 +218,7 @@ class _MenuGrid extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Material(
-          color: color.withOpacity(0.2), // warna background lingkaran
+          color: color.withOpacity(0.2), 
           shape: const CircleBorder(),
           child: InkWell(
             customBorder: const CircleBorder(), // ripple bulat
