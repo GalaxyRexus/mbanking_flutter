@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'form_transfer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Home());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
       title: "DECApay",
       theme: ThemeData(primarySwatch: Colors.purple),
       home: HomePage(),
+      routes: {
+        '/form_transfer': (context) => FormTransferPage(),
+      },
     );
   }
 }
@@ -75,6 +79,7 @@ class HomePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+<<<<<<< HEAD
                         _MenuIcon(
                           icon: Icons.add_circle,
                           label: "Top Up",
@@ -95,6 +100,18 @@ class HomePage extends StatelessWidget {
                           label: "Riwayat",
                           onTap: () => _goToPage(context, "Riwayat"),
                         ),
+=======
+                        const _MenuIcon(icon: Icons.add_circle, label: "Top Up"),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/form_transfer');
+                          },
+                          child: const _MenuIcon(icon: Icons.send, label: "Transfer"),
+                        ),
+                        const _MenuIcon(icon: Icons.money_off, label: "Tarik Tunai"),
+                        const _MenuIcon(icon: Icons.history, label: "Riwayat"),
+>>>>>>> 10567f6a681d8398a0bbcc960a7f22d4c51dc36e
                       ],
                     ),
                   ],
