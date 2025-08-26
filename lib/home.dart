@@ -10,14 +10,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomePage(),
       debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final Color primaryColor = const Color(0xFF9C27B0); // Ungu seperti di gambar
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +79,7 @@ Container(
             // Menu atas (icon + text)
             
 
-            const SizedBox(height: 24),
-            const Text("Menu Lain"),
+              const SizedBox(height: 12),
 
             const SizedBox(height: 16),
 
