@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'form_transfer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Home());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
+      routes: {
+        '/form_transfer': (context) => FormTransferPage(),
+      },
     );
   }
 }
@@ -78,13 +82,19 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        _MenuIcon(icon: Icons.add_circle, label: "Top Up"),
-                        _MenuIcon(icon: Icons.send, label: "Transfer"),
-                        _MenuIcon(icon: Icons.money_off, label: "Tarik Tunai"),
-                        _MenuIcon(icon: Icons.history, label: "Riwayat"),
+                      children: [
+                        const _MenuIcon(icon: Icons.add_circle, label: "Top Up"),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/form_transfer');
+                          },
+                          child: const _MenuIcon(icon: Icons.send, label: "Transfer"),
+                        ),
+                        const _MenuIcon(icon: Icons.money_off, label: "Tarik Tunai"),
+                        const _MenuIcon(icon: Icons.history, label: "Riwayat"),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
