@@ -52,9 +52,7 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.bold)),
                 ],
               ),
-            ),
-
-            const SizedBox(height: 16),
+            ),            const SizedBox(height: 16),
 
             // Menu atas
             Row(
