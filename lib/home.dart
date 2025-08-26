@@ -11,6 +11,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "DECApay",
+      theme: ThemeData(primarySwatch: Colors.purple),
       home: HomePage(),
     );
   }
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final Color primaryColor = const Color(0xFF9C27B0); // Ungu seperti di gambar
+  final Color primaryColor = const Color(0xFF9C27B0);
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +56,12 @@ class HomePage extends StatelessWidget {
                   children: [
                     const Text(
                       "Delia Sabrina - 0022345789",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     const SizedBox(height: 8),
                     const Text(
                       "Total Saldo",
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
                     const Text(
                       "Rp 1.000.000.000",
@@ -78,13 +74,29 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        _MenuIcon(icon: Icons.add_circle, label: "Top Up"),
-                        _MenuIcon(icon: Icons.send, label: "Transfer"),
-                        _MenuIcon(icon: Icons.money_off, label: "Tarik Tunai"),
-                        _MenuIcon(icon: Icons.history, label: "Riwayat"),
+                      children: [
+                        _MenuIcon(
+                          icon: Icons.add_circle,
+                          label: "Top Up",
+                          onTap: () => _goToPage(context, "Top Up"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.send,
+                          label: "Transfer",
+                          onTap: () => _goToPage(context, "Transfer"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.money_off,
+                          label: "Tarik Tunai",
+                          onTap: () => _goToPage(context, "Tarik Tunai"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.history,
+                          label: "Riwayat",
+                          onTap: () => _goToPage(context, "Riwayat"),
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -92,10 +104,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 20),
               const Text(
                 "Menu Lain",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 12),
@@ -106,86 +115,142 @@ class HomePage extends StatelessWidget {
                   crossAxisCount: 4,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  children: const [
+                  children: [
                     _MenuGrid(
                       icon: Icons.phone,
                       label: "Pulsa",
                       color: Colors.blue,
+                      onTap: () => _goToPage(context, "Pulsa"),
                     ),
                     _MenuGrid(
                       icon: Icons.flash_on,
                       label: "PLN",
                       color: Colors.orange,
+                      onTap: () => _goToPage(context, "PLN"),
                     ),
                     _MenuGrid(
                       icon: Icons.water_drop,
                       label: "PDAM",
                       color: Colors.lightBlue,
+                      onTap: () => _goToPage(context, "PDAM"),
                     ),
                     _MenuGrid(
                       icon: Icons.signal_cellular_alt,
                       label: "Paket Data",
                       color: Colors.green,
+                      onTap: () => _goToPage(context, "Paket Data"),
                     ),
                     _MenuGrid(
                       icon: Icons.settings,
                       label: "Pengaturan",
                       color: Colors.grey,
+                      onTap: () => _goToPage(context, "Pengaturan"),
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  // Fungsi Navigasi ke halaman baru
+  void _goToPage(BuildContext context, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => DummyPage(title: title)),
+    );
+  }
 }
 
-// Widget untuk ikon di dalam Card Saldo
+// ===================== WIDGET =====================
+
+// Widget untuk ikon di dalam Card Saldo (tanpa ripple)
 class _MenuIcon extends StatelessWidget {
   final IconData icon;
   final String label;
+  final VoidCallback? onTap;
 
-  const _MenuIcon({required this.icon, required this.label});
+  const _MenuIcon({
+    required this.icon,
+    required this.label,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, color: Colors.white, size: 28),
+        GestureDetector(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0), // area klik lebih nyaman
+            child: Icon(icon, color: Colors.white, size: 28),
+          ),
+        ),
         const SizedBox(height: 4),
         Text(
           label,
           style: const TextStyle(color: Colors.white, fontSize: 12),
-        )
+        ),
       ],
     );
   }
 }
+
 
 // Widget untuk Grid Menu
 class _MenuGrid extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
-
-  const _MenuGrid(
-      {required this.icon, required this.label, required this.color});
+  final VoidCallback onTap;
+  const _MenuGrid({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircleAvatar(
-          radius: 28,
-          backgroundColor: color.withOpacity(0.2),
-          child: Icon(icon, color: color, size: 28),
+        Material(
+          color: color.withOpacity(0.2), // warna background lingkaran
+          shape: const CircleBorder(),
+          child: InkWell(
+            customBorder: const CircleBorder(), // ripple bulat
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Icon(icon, color: color, size: 28),
+            ),
+          ),
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),
       ],
+    );
+  }
+}
+
+// Halaman Dummy untuk contoh navigasi
+class DummyPage extends StatelessWidget {
+  final String title;
+
+  const DummyPage({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Text("Halaman $title", style: const TextStyle(fontSize: 20)),
+      ),
     );
   }
 }
