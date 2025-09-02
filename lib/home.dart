@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'form_transfer.dart';
+import 'pengaturan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -157,14 +159,37 @@ class HomePage extends StatelessWidget {
   }
 
   // Fungsi Navigasi ke halaman baru
-  void _goToPage(BuildContext context, String title) {
+}
+// Di dalam class HomePage
+void _goToPage(BuildContext context, String page) {
+  if (page == "Transfer") {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => DummyPage(title: title)),
+      MaterialPageRoute(builder: (context) => const TransferForm()),
+    );
+  } else if (page == "Top Up") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DummyPage(title: "Top Up")),
+    );
+  } else if (page == "Tarik Tunai") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DummyPage(title: "Tarik Tunai")),
+    );
+  } else if (page == "Riwayat") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DummyPage(title: "Riwayat")),
     );
   }
+   else if (page == "Pengaturan"){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PengaturanPage()),
+    );
+   }
 }
-
 // Widget untuk ikon di dalam Card Saldo 
 class _MenuIcon extends StatelessWidget {
   final IconData icon;

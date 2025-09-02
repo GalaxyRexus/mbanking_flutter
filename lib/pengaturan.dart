@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const FormPrinterPage());
+  runApp(const PengaturanPage());
 }
 
-class FormPrinterPage extends StatelessWidget {
-  const FormPrinterPage({super.key});
+class PengaturanPage extends StatelessWidget {
+  const PengaturanPage({super.key});
 
   @override
   Widget build(BuildContext context) {
