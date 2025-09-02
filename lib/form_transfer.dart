@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'home.dart'; // pastikan ini path ke home.dart
 
 void main() {
   runApp(const FormTransferPage());
@@ -10,10 +9,7 @@ class FormTransferPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const TransferForm(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: TransferForm());
   }
 }
 
@@ -49,7 +45,7 @@ class _TransferFormState extends State<TransferForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header dengan tombol kembali segitiga
+              // Header
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -59,21 +55,12 @@ class _TransferFormState extends State<TransferForm> {
                 ),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomePage()),
-                        );
+                    // Tombol back
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () {
+                        Navigator.pop(context); // kembali ke halaman sebelumnya
                       },
-                      child: Transform.rotate(
-                        angle: 3.1416, // putar 180 derajat
-                        child: CustomPaint(
-                          size: const Size(24, 24),
-                          painter: TrianglePainter(color: Colors.white),
-                        ),
-                      ),
                     ),
                     const SizedBox(width: 8),
                     const Text(
@@ -87,7 +74,6 @@ class _TransferFormState extends State<TransferForm> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
 
               // Input nama/email
               TextField(
@@ -194,6 +180,7 @@ class _TransferFormState extends State<TransferForm> {
                     ),
                   ),
                   onPressed: () {
+                    // contoh ambil input
                     String nama = namaController.text;
                     String nominal = nominalController.text;
                     String pesan = pesanController.text;
@@ -218,24 +205,4 @@ class _TransferFormState extends State<TransferForm> {
       ),
     );
   }
-}
-
-// Custom Painter Segitiga
-class TrianglePainter extends CustomPainter {
-  final Color color;
-  TrianglePainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color;
-    final path = Path();
-    path.moveTo(0, size.height / 2); // titik kiri tengah
-    path.lineTo(size.width, 0); // titik kanan atas
-    path.lineTo(size.width, size.height); // titik kanan bawah
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
