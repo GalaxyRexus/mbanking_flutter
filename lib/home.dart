@@ -25,15 +25,13 @@ class HomePage extends StatelessWidget {
 
   final Color primaryColor = const Color(0xFF9C27B0);
 
- @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: Colors.purple.shade50,
-    resizeToAvoidBottomInset: true, // agar konten naik saat keyboard muncul
-    body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView( // Tambahkan scroll agar tidak overflow
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.purple.shade50,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,16 +44,79 @@ Widget build(BuildContext context) {
                 ),
               ),
               const SizedBox(height: 12),
-              // ...existing code...
+
+              // Card Saldo
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Delia Sabrina - 0022345789",
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Total Saldo",
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    ),
+                    const Text(
+                      "Rp 1.000.000.000",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _MenuIcon(
+                          icon: Icons.add_circle,
+                          label: "Top Up",
+                          onTap: () => _goToPage(context, "Top Up"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.send,
+                          label: "Transfer",
+                          onTap: () => _goToPage(context, "Transfer"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.money_off,
+                          label: "Tarik Tunai",
+                          onTap: () => _goToPage(context, "Tarik Tunai"),
+                        ),
+                        _MenuIcon(
+                          icon: Icons.history,
+                          label: "Riwayat",
+                          onTap: () => _goToPage(context, "Riwayat"),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              const Text(
+                "Menu Lain",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 12),
+
               // Grid Menu
-              SizedBox(
-                height: 220, // batasi tinggi grid agar tidak overflow
+              Expanded(
                 child: GridView.count(
                   crossAxisCount: 4,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     _MenuGrid(
                       icon: Icons.phone,
@@ -94,9 +155,8 @@ Widget build(BuildContext context) {
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   // Fungsi Navigasi ke halaman baru
 }
