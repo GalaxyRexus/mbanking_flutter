@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 void main() {
   runApp(const PengaturanPage());
@@ -9,7 +10,10 @@ class PengaturanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: PrinterForm());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const PrinterForm(),
+    );
   }
 }
 
@@ -31,7 +35,7 @@ class _PrinterFormState extends State<PrinterForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header dengan tombol kembali ke HomePage
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -44,7 +48,11 @@ class _PrinterFormState extends State<PrinterForm> {
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
-                      Navigator.pop(context); // kembali ke halaman sebelumnya
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage()),
+                      );
                     },
                   ),
                   const Expanded(
@@ -63,6 +71,8 @@ class _PrinterFormState extends State<PrinterForm> {
                 ],
               ),
             ),
+
+            const SizedBox(height: 12),
 
             // Daftar Printer
             Expanded(

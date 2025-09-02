@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 void main() {
   runApp(const FormTransferPage());
@@ -59,7 +60,10 @@ class _TransferFormState extends State<TransferForm> {
                     IconButton(
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
                       onPressed: () {
-                        Navigator.pop(context); // kembali ke halaman sebelumnya
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
                       },
                     ),
                     const SizedBox(width: 8),
