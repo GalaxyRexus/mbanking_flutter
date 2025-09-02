@@ -25,144 +25,108 @@ class HomePage extends StatelessWidget {
 
   final Color primaryColor = const Color(0xFF9C27B0);
 
- @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: Colors.purple.shade50,
-    resizeToAvoidBottomInset: true, // agar konten naik saat keyboard muncul
-    body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView( // Tambahkan scroll agar tidak overflow
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "DECApay",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.purple.shade50,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "DECApay",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              // ...existing code...
-              // Grid Menu
-              SizedBox(
-                height: 220, // batasi tinggi grid agar tidak overflow
-                child: GridView.count(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _MenuGrid(
-                      icon: Icons.phone,
-                      label: "Pulsa",
-                      color: Colors.blue,
-                      onTap: () => _goToPage(context, "Pulsa"),
-                    ),
-                    _MenuGrid(
-                      icon: Icons.flash_on,
-                      label: "PLN",
-                      color: Colors.orange,
-                      onTap: () => _goToPage(context, "PLN"),
-                    ),
-                    _MenuGrid(
-                      icon: Icons.water_drop,
-                      label: "PDAM",
-                      color: Colors.lightBlue,
-                      onTap: () => _goToPage(context, "PDAM"),
-                    ),
-                    _MenuGrid(
-                      icon: Icons.signal_cellular_alt,
-                      label: "Paket Data",
-                      color: Colors.green,
-                      onTap: () => _goToPage(context, "Paket Data"),
-                    ),
-                    _MenuGrid(
-                      icon: Icons.settings,
-                      label: "Pengaturan",
-                      color: Colors.grey,
-                      onTap: () => _goToPage(context, "Pengaturan"),
-                    ),
-                  ],
+                const SizedBox(height: 12),
+
+                // Grid Menu
+                SizedBox(
+                  height: 220,
+                  child: GridView.count(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _MenuGrid(
+                        icon: Icons.phone,
+                        label: "Pulsa",
+                        color: Colors.blue,
+                        onTap: () => _goToPage(context, "Pulsa"),
+                      ),
+                      _MenuGrid(
+                        icon: Icons.flash_on,
+                        label: "PLN",
+                        color: Colors.orange,
+                        onTap: () => _goToPage(context, "PLN"),
+                      ),
+                      _MenuGrid(
+                        icon: Icons.water_drop,
+                        label: "PDAM",
+                        color: Colors.lightBlue,
+                        onTap: () => _goToPage(context, "PDAM"),
+                      ),
+                      _MenuGrid(
+                        icon: Icons.settings,
+                        label: "Pengaturan",
+                        color: Colors.grey,
+                        onTap: () => _goToPage(context, "Pengaturan"),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   // Fungsi Navigasi ke halaman baru
-}
-// Di dalam class HomePage
-void _goToPage(BuildContext context, String page) {
-  if (page == "Transfer") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const TransferForm()),
-    );
-  } else if (page == "Top Up") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Top Up")),
-    );
-  } else if (page == "Tarik Tunai") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Tarik Tunai")),
-    );
-  } else if (page == "Riwayat") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Riwayat")),
-    );
-  }
-   else if (page == "Pengaturan"){
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PengaturanPage()),
-    );
-   }
-}
-// Widget untuk ikon di dalam Card Saldo 
-class _MenuIcon extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-
-  const _MenuIcon({
-    required this.icon,
-    required this.label,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0), // area klik lebih nyaman
-            child: Icon(icon, color: Colors.white, size: 28),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
-        ),
-      ],
-    );
+  void _goToPage(BuildContext context, String page) {
+    if (page == "Transfer") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TransferForm()),
+      );
+    } else if (page == "Top Up") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DummyPage(title: "Top Up")),
+      );
+    } else if (page == "Tarik Tunai") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DummyPage(title: "Tarik Tunai")),
+      );
+    } else if (page == "Riwayat") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DummyPage(title: "Riwayat")),
+      );
+    } else if (page == "Pengaturan") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PengaturanPage()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DummyPage(title: page)),
+      );
+    }
   }
 }
-
 
 // Widget untuk Grid Menu
 class _MenuGrid extends StatelessWidget {
@@ -170,6 +134,7 @@ class _MenuGrid extends StatelessWidget {
   final String label;
   final Color color;
   final VoidCallback onTap;
+
   const _MenuGrid({
     required this.icon,
     required this.label,
@@ -183,10 +148,10 @@ class _MenuGrid extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Material(
-          color: color.withOpacity(0.2), 
+          color: color.withOpacity(0.2),
           shape: const CircleBorder(),
           child: InkWell(
-            customBorder: const CircleBorder(), // ripple bulat
+            customBorder: const CircleBorder(),
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(16.0),

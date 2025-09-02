@@ -39,18 +39,30 @@ class _PrinterFormState extends State<PrinterForm> {
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Text(
-                "PENGATURAN",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context); // kembali ke halaman sebelumnya
+                    },
+                  ),
+                  const Expanded(
+                    child: Text(
+                      "PENGATURAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 48), // supaya teks tetap di tengah
+                ],
               ),
             ),
-            const SizedBox(height: 12),
 
             // Daftar Printer
             Expanded(
@@ -93,9 +105,7 @@ class PrinterTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.black12),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.black12)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,20 +125,14 @@ class PrinterTile extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 spec,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black54,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.black54),
               ),
             ],
           ),
           // kanan (tanggal)
           Text(
             date,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.black87,
-            ),
+            style: const TextStyle(fontSize: 12, color: Colors.black87),
           ),
         ],
       ),
