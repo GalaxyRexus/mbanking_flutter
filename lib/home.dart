@@ -112,7 +112,8 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Grid Menu
-              GridView.count(
+              Expanded(
+                child: GridView.count(
                   crossAxisCount: 4,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
@@ -148,6 +149,7 @@ class HomePage extends StatelessWidget {
                       onTap: () => _goToPage(context, "Pengaturan"),
                     ),
                   ],
+                ),
               ),
             ],
           ),
@@ -252,7 +254,7 @@ class _MenuGrid extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 2),
         Text(label, style: const TextStyle(fontSize: 12)),
       ],
     );
