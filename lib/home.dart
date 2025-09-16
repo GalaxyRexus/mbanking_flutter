@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'form_transfer.dart';
 import 'pengaturan.dart';
 
@@ -20,9 +21,25 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+ 
+  class HomePage extends StatefulWidget {
   HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String nama = "Tes Nama Dlu";
+  int nominal = 1030000;
+  String formatRupiah(int number) {
+  final formatCurrency = NumberFormat.currency(
+    locale: 'id_ID',
+    symbol: 'Rp ',
+    decimalDigits: 0,
+  );
+  return formatCurrency.format(number);
+}
   final Color primaryColor = const Color(0xFF9C27B0);
 
   @override
@@ -56,8 +73,8 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Delia Sabrina - 0022345789",
+                     Text(
+                      "$nama - 0022345789",
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     const SizedBox(height: 8),
@@ -65,8 +82,8 @@ class HomePage extends StatelessWidget {
                       "Total Saldo",
                       style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
-                    const Text(
-                      "Rp 1.000.000.000",
+                     Text(
+                      formatRupiah(nominal),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -82,10 +99,17 @@ class HomePage extends StatelessWidget {
                           label: "Top Up",
                           onTap: () => _goToPage(context, "Top Up"),
                         ),
-                        _MenuIcon(
-                          icon: Icons.send,
-                          label: "Transfer",
-                          onTap: () => _goToPage(context, "Transfer"),
+                        GestureDetector(
+                          onTap: () async{
+                            final hasil = await Navigator.push(
+                              context,
+                              MaterialPageRoute(builder:(context) => TransferForm(saldo:nominal) )
+                            );
+                          },
+                          child: _MenuIcon(
+                            icon: Icons.send,
+                            label: "Transfer",
+                          ),
                         ),
                         _MenuIcon(
                           icon: Icons.money_off,
@@ -157,17 +181,10 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  // Fungsi Navigasi ke halaman baru
 }
 // Di dalam class HomePage
 void _goToPage(BuildContext context, String page) {
-  if (page == "Transfer") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const TransferForm()),
-    );
-  } else if (page == "Top Up") {
+  if (page == "Top Up") {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DummyPage(title: "Top Up")),
