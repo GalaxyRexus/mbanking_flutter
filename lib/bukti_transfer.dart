@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart'; // untuk ambil saldo global
 
 void main() {
   runApp(const MyApp());
@@ -9,18 +10,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TransferSuccessPage(),
+      home: HomePage(), // ✅ jalan
     );
   }
 }
 
 class TransferSuccessPage extends StatelessWidget {
-  const TransferSuccessPage({super.key});
+  final String namaPengirim;
+  final String jenisTransaksi;
+  final String namaPenerima;
+  final double nominal;
+  final String tanggal;
+  final String keterangan;
+
+  const TransferSuccessPage({
+    super.key,
+    required this.namaPengirim,
+    required this.jenisTransaksi,
+    required this.namaPenerima,
+    required this.nominal,
+    required this.tanggal,
+    required this.keterangan,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // kurangi saldo global saat halaman ini dipanggil
+    if (HomePage.saldo >= nominal) {
+      HomePage.saldo -= nominal;
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: Center(
@@ -30,6 +51,7 @@ class TransferSuccessPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
+
               // Icon lingkaran gradient
               CircleAvatar(
                 radius: 50,
@@ -41,45 +63,52 @@ class TransferSuccessPage extends StatelessWidget {
               const Text(
                 "Transfer Berhasil",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black87),
-              ),
-              const Text(
-                "-Tanggal Transaksi-",
-                style: TextStyle(color: Colors.grey),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 10),
 
-              const Text(
-                "~Nominal~",
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic),
+              Text(
+                "Rp ${nominal.toStringAsFixed(0)}",
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               const SizedBox(height: 30),
 
-              // Detail informasi (kiri label, kanan isi)
-              RowInfo("Nama Pengirim", "Nama Pengirim"),
-              RowInfo("Jenis Transaksi", "Jenis Transaksi"),
-              RowInfo("Nama Penerima", "Nama Penerima"),
-              RowInfo("Nominal Transfer", "Nominal Transfer"),
-              RowInfo("Tanggal Transfer", "Tanggal Transfer"),
-              RowInfo("Keterangan", "Keterangan"),
+              // Detail informasi
+              RowInfo("Nama Pengirim", namaPengirim),
+              RowInfo("Jenis Transaksi", jenisTransaksi),
+              RowInfo("Nama Penerima", namaPenerima),
+              RowInfo("Nominal Transfer", "Rp ${nominal.toStringAsFixed(0)}"),
+              RowInfo("Tanggal Transfer", tanggal),
+              RowInfo("Keterangan", keterangan.isEmpty ? "-" : keterangan),
+              RowInfo("Sisa Saldo", "Rp ${HomePage.saldo.toStringAsFixed(0)}"),
 
               const Spacer(),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue.shade900,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
                 onPressed: () {
-                  // aksi tombol
-                  Navigator.pop(context);
+                  // kembali ke home sambil reset navigation stack
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    (route) => false,
+                  );
                 },
                 child: const Text("Cetak & Kembali"),
               ),
@@ -104,13 +133,18 @@ class RowInfo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: const TextStyle(color: Colors.black87, fontSize: 14)),
-          Text(value,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                  fontSize: 14)),
+          Text(
+            label,
+            style: const TextStyle(color: Colors.black87, fontSize: 14),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+              fontSize: 14,
+            ),
+          ),
         ],
       ),
     );

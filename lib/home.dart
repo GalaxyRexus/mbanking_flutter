@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'form_transfer.dart';
 import 'pengaturan.dart';
 
@@ -21,25 +20,18 @@ class MyApp extends StatelessWidget {
   }
 }
 
- 
-  class HomePage extends StatefulWidget {
+// ✅ HomePage dijadikan Stateful agar saldo bisa update otomatis
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  // ✅ saldo global, bisa dipakai semua halaman
+  static double saldo = 1000000000; // Rp 1.000.000.000
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String nama = "Tes Nama Dlu";
-  int nominal = 1030000;
-  String formatRupiah(int number) {
-  final formatCurrency = NumberFormat.currency(
-    locale: 'id_ID',
-    symbol: 'Rp ',
-    decimalDigits: 0,
-  );
-  return formatCurrency.format(number);
-}
   final Color primaryColor = const Color(0xFF9C27B0);
 
   @override
@@ -73,8 +65,8 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
-                      "$nama - 0022345789",
+                    const Text(
+                      "Delia Sabrina - 0022345789",
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     const SizedBox(height: 8),
@@ -82,9 +74,10 @@ class _HomePageState extends State<HomePage> {
                       "Total Saldo",
                       style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
-                     Text(
-                      formatRupiah(nominal),
-                      style: TextStyle(
+                    // ✅ saldo global ditampilkan di sini
+                    Text(
+                      "Rp ${HomePage.saldo.toStringAsFixed(0)}",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -99,17 +92,13 @@ class _HomePageState extends State<HomePage> {
                           label: "Top Up",
                           onTap: () => _goToPage(context, "Top Up"),
                         ),
-                        GestureDetector(
-                          onTap: () async{
-                            final hasil = await Navigator.push(
-                              context,
-                              MaterialPageRoute(builder:(context) => TransferForm(saldo:nominal) )
-                            );
+                        _MenuIcon(
+                          icon: Icons.send,
+                          label: "Transfer",
+                          onTap: () async {
+                            await _goToPage(context, "Transfer");
+                            setState(() {}); // refresh saldo setelah kembali
                           },
-                          child: _MenuIcon(
-                            icon: Icons.send,
-                            label: "Transfer",
-                          ),
                         ),
                         _MenuIcon(
                           icon: Icons.money_off,
@@ -133,13 +122,13 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
 
-              const SizedBox(height: 12),
+               SizedBox(height: 12),
 
               // Grid Menu
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 4,
-                  crossAxisSpacing: 16,
+                  crossAxisSpacing: 6,
                   mainAxisSpacing: 16,
                   children: [
                     _MenuGrid(
@@ -182,32 +171,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-// Di dalam class HomePage
-void _goToPage(BuildContext context, String page) {
-  if (page == "Top Up") {
+
+// Fungsi Navigasi ke halaman baru
+Future<void> _goToPage(BuildContext context, String page) async {
+  if (page == "Transfer") {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TransferForm()),
+    );
+  } else if (page == "Top Up") {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Top Up")),
+      MaterialPageRoute(builder: (context) => const DummyPage(title: "Top Up")),
     );
   } else if (page == "Tarik Tunai") {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Tarik Tunai")),
+      MaterialPageRoute(
+          builder: (context) => const DummyPage(title: "Tarik Tunai")),
     );
   } else if (page == "Riwayat") {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DummyPage(title: "Riwayat")),
+      MaterialPageRoute(builder: (context) => const DummyPage(title: "Riwayat")),
     );
-  }
-   else if (page == "Pengaturan"){
+  } else if (page == "Pengaturan") {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PengaturanPage()),
     );
-   }
+  }
 }
-// Widget untuk ikon di dalam Card Saldo 
+
+// Widget untuk ikon di dalam Card Saldo
 class _MenuIcon extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -240,7 +236,6 @@ class _MenuIcon extends StatelessWidget {
   }
 }
 
-
 // Widget untuk Grid Menu
 class _MenuGrid extends StatelessWidget {
   final IconData icon;
@@ -260,7 +255,7 @@ class _MenuGrid extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Material(
-          color: color.withOpacity(0.2), 
+          color: color.withOpacity(0.2),
           shape: const CircleBorder(),
           child: InkWell(
             customBorder: const CircleBorder(), // ripple bulat
