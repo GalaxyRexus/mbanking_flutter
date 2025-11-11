@@ -201,7 +201,7 @@ class _TransferFormState extends State<TransferForm> {
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => TransferSuccessPage(
+                            (context) => BuktiTfPage(
                               namaPengirim: "User A",
                               jenisTransaksi: "Transfer",
                               namaPenerima: nama,
